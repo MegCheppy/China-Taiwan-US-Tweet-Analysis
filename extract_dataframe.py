@@ -18,10 +18,36 @@ def read_json(json_file: str)->list:
     tweets_data = []
     for tweets in open(json_file,'r'):
         tweets_data.append(json.loads(tweets))
-    
+       
     
     return len(tweets_data), tweets_data
 
+[
+    "created_at",
+    "id",
+    "id_str",
+    "text",
+    "truncated",
+    "entities",
+    "source",
+    "in_reply_to_status_id",
+    "in_reply_to_status_id_str",
+    "in_reply_to_user_id",
+    "in_reply_to_user_id_str",
+    "in_reply_to_screen_name",
+    "user",
+    "geo",
+    "coordinates",
+    "place",
+    "contributors",
+    "retweeted_status",
+    "is_quote_status",
+    "retweet_count",
+    "favorite_count",
+    "favorited",
+    "retweeted",
+    "lang",
+]
 class TweetDfExtractor:
     """
     this function will parse tweets json into a pandas dataframe
@@ -36,72 +62,90 @@ class TweetDfExtractor:
 
     # an example function
     def find_statuses_count(self)->list:
-        statuses_count 
+        return [t['user']['statuses_count'] for t in self.tweets_list]
         
     def find_full_text(self)->list:
-        text = 
+        return [t['text'] for t in self.tweets_list]
+
        
     
     def find_sentiments(self, text)->list:
-        
-        return polarity, self.subjectivity
+         """
+        this function will find the polarity and subjectivity of the tweet
+        Args:
+        -----
+        text: list of tweets
+
+        Returns
+        -------
+        list of polarity and subjectivity
+        """
+         polarity = []
+         subjectivity = []
+         for t in text:
+          blob = TextBlob(t)
+          polarity.append(blob.sentiment.polarity)
+          subjectivity.append(blob.sentiment.subjectivity)
+         return polarity, subjectivity
 
     def find_created_time(self)->list:
-       
-        return created_at
+        return [t['created_at'] for t in self.tweets_list]
 
     def find_source(self)->list:
-        source = 
-
-        return source
+        return [t['source'] for t in self.tweets_list]
 
     def find_screen_name(self)->list:
-        screen_name = 
+        return [t['user']['screen_name'] for t in self.tweets_list]
 
     def find_followers_count(self)->list:
-        followers_count = 
+        return [t['user']['followers_count'] for t in self.tweets_list]
 
     def find_friends_count(self)->list:
-        friends_count = 
+        return [t['user']['friends_count'] for t in self.tweets_list]
+
+    def find_lang(self)->list:
+        return [t['lang'] for t in self.tweets_list]
 
     def is_sensitive(self)->list:
-        try:
-            is_sensitive = [x['possibly_sensitive'] for x in self.tweets_list]
-        except KeyError:
-            is_sensitive = None
-
-        return is_sensitive
+        lst = []
+        for x in self.tweets_list:
+            try:
+                is_sensitive =  x['possibly_sensitive']
+            except KeyError:
+                is_sensitive = None
+            lst.append(is_sensitive)
+        return lst
 
     def find_favourite_count(self)->list:
-        
-    
+        return [t['favorite_count'] for t in self.tweets_list]
+
+
     def find_retweet_count(self)->list:
-        retweet_count = 
+        return [t['retweet_count'] for t in self.tweets_list]
 
     def find_hashtags(self)->list:
-        hashtags =
+        return [t['entities']['hashtags'] for t in self.tweets_list]
 
     def find_mentions(self)->list:
-        mentions = 
+        return [t['entities']['user_mentions'] for t in self.tweets_list]
 
 
     def find_location(self)->list:
-        try:
-            location = self.tweets_list['user']['location']
-        except TypeError:
-            location = ''
-        
-        return location
+        locations = []
+        for t in self.tweets_list:
+            try:
+                locations.append(t['user']['location'])
+            except KeyError:
+                locations.append('')
+        return locations
 
-    
-        
-        
+
     def get_tweet_df(self, save=False)->pd.DataFrame:
         """required column to be generated you should be creative and add more features"""
-        
-        columns = ['created_at', 'source', 'original_text','polarity','subjectivity', 'lang', 'favorite_count', 'retweet_count', 
+
+        columns = ['created_at', 'source', 'original_text','polarity','subjectivity', 'lang', 'favorite_count', 'retweet_count',
             'original_author', 'followers_count','friends_count','possibly_sensitive', 'hashtags', 'user_mentions', 'place']
-        
+
         created_at = self.find_created_time()
         source = self.find_source()
         text = self.find_full_text()
@@ -122,16 +166,37 @@ class TweetDfExtractor:
         if save:
             df.to_csv('processed_tweet_data.csv', index=False)
             print('File Successfully Saved.!!!')
-        
+
         return df
 
-                
+
 if __name__ == "__main__":
     # required column to be generated you should be creative and add more features
-    columns = ['created_at', 'source', 'original_text','clean_text', 'sentiment','polarity','subjectivity', 'lang', 'favorite_count', 'retweet_count', 
-    'original_author', 'screen_count', 'followers_count','friends_count','possibly_sensitive', 'hashtags', 'user_mentions', 'place', 'place_coord_boundaries']
-    _, tweet_list = read_json("../covid19.json")
+    columns = [
+        "created_at",
+        "source",
+        "original_text",
+        "clean_text",
+        "sentiment",
+        "polarity",
+        "subjectivity",
+        "lang",
+        "favorite_count",
+        "retweet_count",
+        "original_author",
+        "screen_count",
+        "followers_count",
+        "friends_count",
+        "possibly_sensitive",
+        "hashtags",
+        "user_mentions",
+        "place",
+        "place_coord_boundaries",
+    ]
+    _, tweet_list = read_json("data/africa_twitter_data.json")
     tweet = TweetDfExtractor(tweet_list)
-    tweet_df = tweet.get_tweet_df() 
+    tweet_df = tweet.get_tweet_df()
 
     # use all defined functions to generate a dataframe with the specified columns above
+
+   
