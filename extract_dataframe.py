@@ -22,32 +22,7 @@ def read_json(json_file: str)->list:
     
     return len(tweets_data), tweets_data
 
-[
-    "created_at",
-    "id",
-    "id_str",
-    "text",
-    "truncated",
-    "entities",
-    "source",
-    "in_reply_to_status_id",
-    "in_reply_to_status_id_str",
-    "in_reply_to_user_id",
-    "in_reply_to_user_id_str",
-    "in_reply_to_screen_name",
-    "user",
-    "geo",
-    "coordinates",
-    "place",
-    "contributors",
-    "retweeted_status",
-    "is_quote_status",
-    "retweet_count",
-    "favorite_count",
-    "favorited",
-    "retweeted",
-    "lang",
-]
+
 class TweetDfExtractor:
     """
     this function will parse tweets json into a pandas dataframe
@@ -65,7 +40,7 @@ class TweetDfExtractor:
         return [t['user']['statuses_count'] for t in self.tweets_list]
         
     def find_full_text(self)->list:
-        return [t['text'] for t in self.tweets_list]
+        return [t['full_text']for t in self.tweets_list]
 
        
     
@@ -194,8 +169,10 @@ if __name__ == "__main__":
         "place_coord_boundaries",
     ]
     _, tweet_list = read_json("data/africa_twitter_data.json")
+    #
     tweet = TweetDfExtractor(tweet_list)
-    tweet_df = tweet.get_tweet_df()
+    tweet_df = tweet.get_tweet_df(save=True)
+    
 
     # use all defined functions to generate a dataframe with the specified columns above
 
