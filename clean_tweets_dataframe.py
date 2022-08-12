@@ -54,3 +54,13 @@ class Clean_Tweets:
         df = df[df['lang']== 'en']
         
         return df
+        def clean_tweet(self, df: pd.DataFrame, save_csv: bool = False):
+            df = self.drop_unwanted_column(df)
+            df= self.drop_duplicate(df)
+            df = self.convert_to_datetime(df)
+            df = self.convert_to_numbers(df)
+            df = self.remove_non_english_tweets(df)
+
+            if save_csv:
+                df.to_csv("cleaned_tweet_data.csv",index=False)
+                print('saved successfully')
