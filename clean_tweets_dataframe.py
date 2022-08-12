@@ -39,7 +39,7 @@ class Clean_Tweets:
         """
         df['polarity'] = pd.to_numeric(df['polarity'])
         df['subjectivity']= pd.to_numeric(df['subjectivity'])
-        df['favorite_count']= pd.to_numeric(df['fav_count'])
+        df['favorite_count']= pd.to_numeric(df['favorite_count'])
         df['retweet_count']= pd.to_numeric(df['retweet_count'])
         df['followers_count']= pd.to_numeric(df['followers_count'])
         df['friends_count']= pd.to_numeric(df['friends_count'])
@@ -57,7 +57,7 @@ class Clean_Tweets:
 
     def clean_tweet(self, df: pd.DataFrame, save_csv: bool = False):
         df = self.drop_unwanted_column(df)
-        df = self.drop_duplicate(df)
+        #df = self.drop_duplicate(df)
         df = self.convert_to_datetime(df)
         df = self.convert_to_numbers(df)
         df = self.remove_non_english_tweets(df)
