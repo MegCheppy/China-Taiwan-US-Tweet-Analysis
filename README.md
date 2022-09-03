@@ -1,9 +1,10 @@
-Tweet Analysis of the China-Taiwan-US Current Political Situation
+# Tweet Analysis of the China-Taiwan-US Current Political Situation
 An end to end Machine Learning project on Natural Language Processing to analyze data collected from tweets about the China-US- Taiwan situation; from collecting tweets to deploying results on the dashboard. The models explored here are topic modelling and sentiment 
  
-Business understanding.
+##Business understanding.
 The current China-US-Taiwan crisis has fueled a lot of tension in the affected countries which might significantly affect the economy. People doing business around China, the US, and Taiwan may be greatly affected. We can gauge how people around the world are feeling about it and in turn, give them insights to make better decisions about their business.
-Data understanding 
+
+## Data understanding 
 To do this analysis, Tweepy, a python library, allows developers to collect data based on certain topics and keywords, in a specific timeline. The data  was collected using the trending keywords: [‘chinaus’, ‘chinaTaiwan’,  ‘chinaTaiwancrisis’, ‘taiwan’, ‘XiJinping’, ‘USCHINA’, ‘pelosi’, ‘TaiwanStraitsCrisis’, ‘WWIII’,  ‘pelosivisittotaiwan’]. Two sets of data were collected, one from a global level and the other from specific African countries. (The need for this is to show the data drift in the ML model from a global view to a specific niche.) You can stream this data in real-time based on these keywords, and write python code, to interface with your end application.
 From my analysis; 
 our “global_twitter_data” had 22,000 tweets. None of the attributes has missing values, save for the “possibly_sensitive” attribute, which had 15,809 missing values. This indicates the number of tweets missing URLs in the tweets. 
