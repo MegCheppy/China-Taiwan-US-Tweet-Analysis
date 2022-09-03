@@ -7,7 +7,7 @@
 >>>>>>> 07659044bbed2d82123239929c8efb05b540f3b7
 An end to end Machine Learning project on Natural Language Processing to analyze data collected from tweets about the China-US- Taiwan situation; from collecting tweets to deploying results on the dashboard. The models explored here are topic modelling and sentiment 
  
-##Business understanding.
+## Business understanding.
 
 The current China-US-Taiwan crisis has fueled a lot of tension in the affected countries which might significantly affect the economy. People doing business around China, the US, and Taiwan may be greatly affected. We can gauge how people around the world are feeling about it and in turn, give them insights to make better decisions about their business.
 
